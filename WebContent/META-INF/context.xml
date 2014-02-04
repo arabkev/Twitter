@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<Resource name="jdbc/blabber" 
+    type="javax.sql.DataSource"
+    auth="Container" 
+	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+	driverClassName="com.mysql.jdbc.Driver" 
+	url="jdbc:mysql://localhost:3306/blabber"
+	username="root" password="jimmygomis" 
+    jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+/>
+
+</Context>

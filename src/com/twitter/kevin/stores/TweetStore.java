@@ -1,6 +1,5 @@
 package com.twitter.kevin.stores;
 
-import java.sql.Date;
 
 public class TweetStore {
 String Text;

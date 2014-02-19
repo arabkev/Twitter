@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="MainStyle.css" type="text/css">
+<link rel="stylesheet" href="CSS/MainStyle.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Blabber - Home</title>
 
@@ -35,6 +35,7 @@ if (session.getAttribute("username") != null)
 %>
 <form name="tweetForm" action="Tweet" method=post>
 Blab: <input type="text" name="tweet">
+Image URL: <input type="text" name="image">
 <input type="hidden" name="username" value="<%=session.getAttribute("username") %>">
 <input type="submit" value="Submit">
 </form>
@@ -82,7 +83,15 @@ if (session.getAttribute("username") == null)
 		while (iterator.hasNext()){
 			TweetStore ts = (TweetStore)iterator.next();
 			%>
-				<h2><%=ts.getTweet() %></h2>
+			<h2><%=ts.getTweet() %></h2>
+			<%
+			if (ts.getImage() != null)
+			{
+			%>
+				<img src="<%=ts.getImage() %>">
+			<%
+			} 
+			%>
 				<p>Blabbed by @<%=ts.getUsername() %> at <%=ts.getDateTime() %></p>
 				<br>
 			<%
@@ -100,9 +109,19 @@ else
 	while (iterator.hasNext()){
 		TweetStore ts = (TweetStore)iterator.next();
 		%>
-			<h2><%=ts.getTweet() %></h2>
-			<p>Blabbed by <a href="Follow?username=<%=ts.getUsername() %>&currentuser=<%=session.getAttribute("username") %>">@<%=ts.getUsername() %></a> at <%=ts.getDateTime() %></p>
-			<br>
+		<h2><%=ts.getTweet() %></h2>
+		<%
+		if (ts.getImage() != null)
+		{
+		%>
+			<img src="<%=ts.getImage() %>">
+		<%
+		} 
+		%>
+			<p>Blabbed by <a href="/Twitter/Follow/<%=ts.getUsername() %>">@<%=ts.getUsername() %></a> at <%=ts.getDateTime() %></p>
+			<!-- 
+			<p>Blabbed by <a href="Follow?username=<%=ts.getUsername() %>&currentUser=<%=session.getAttribute("username") %>">@<%=ts.getUsername() %></a> at <%=ts.getDateTime() %></p>
+			--><br>
 		<%
 	}
 }

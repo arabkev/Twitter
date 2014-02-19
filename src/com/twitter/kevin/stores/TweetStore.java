@@ -7,6 +7,7 @@ String User;
 String DateTime;
 int ID;
 String Username;
+String Image;
 
 public String getTweet()
 {
@@ -33,6 +34,11 @@ public String getUsername()
 	return Username;
 }
 
+public String getImage()
+{
+	return Image;
+}
+
 public void setUsername(String Username)
 {
 	this.Username = Username;
@@ -56,6 +62,11 @@ public void setText(String Tweet)
 public void setUser(String User)
 {
 	this.User = User;
+}
+
+public void setImage(String Image)
+{
+	this.Image = Image;
 }
 
 }

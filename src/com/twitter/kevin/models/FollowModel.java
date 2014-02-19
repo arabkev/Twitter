@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
+import com.twitter.kevin.stores.TweetStore;
 import com.twitter.kevin.stores.UserStore;
 
 public class FollowModel {
@@ -463,6 +465,125 @@ private DataSource _ds = null;
 			return false;
 		}
 		return true;
+	}
+	
+	public LinkedList<TweetStore> getUserTweets(String username)
+	{
+		LinkedList<TweetStore> tweetList = new LinkedList<TweetStore>();
+		Connection conn;
+		TweetStore tweet = null;
+		ResultSet resultSet = null;
+		int id = 0;
+		try
+		{
+			conn = _ds.getConnection();
+		}
+		catch(Exception e)
+		{
+			System.out.println("No Connection in Tweets Model");
+			return null;
+		}
+		PreparedStatement pstmt = null;
+		Statement stmt = null;
+		String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + username + "'";
+			System.out.println("User ID query: " + sqlQuery);
+			try
+			{
+				try
+				{
+					stmt = conn.createStatement();
+				}
+				catch(Exception e)
+				{
+					System.out.println("Can't create prepare statement");
+					return null;
+				}
+				System.out.println("Created prepare");
+				try
+				{
+					resultSet = stmt.executeQuery(sqlQuery);
+				}
+				catch(Exception e)
+				{
+					System.out.println("Cannot execute query " + e);
+					return null;
+				}
+				System.out.println("Statement executed");
+				if (resultSet.wasNull())
+				{
+					System.out.println("Result set was null");
+				}
+				else
+				{
+					System.out.println("Users found");
+				}
+				while (resultSet.next())
+				{
+					id = resultSet.getInt("User_ID");
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println("Error in query: " + e);
+				return null;
+			}
+			sqlQuery = "SELECT * FROM blab WHERE User_ID=" + id;
+			System.out.println("User Tweets query: " + sqlQuery);
+			try
+			{
+				try
+				{
+					stmt = conn.createStatement();
+				}
+				catch(Exception e)
+				{
+					System.out.println("Can't create prepare statement");
+					return null;
+				}
+				System.out.println("Created prepare");
+				try
+				{
+					resultSet = stmt.executeQuery(sqlQuery);
+				}
+				catch(Exception e)
+				{
+					System.out.println("Cannot execute query " + e);
+					return null;
+				}
+				System.out.println("Statement executed");
+				if (resultSet.wasNull())
+				{
+					System.out.println("Result set was null");
+				}
+				else
+				{
+					System.out.println("Users found");
+				}
+				while (resultSet.next())
+				{
+					tweet = new TweetStore();
+					tweet.setText(resultSet.getString("Text"));
+					tweet.setUser(resultSet.getString("User_ID"));
+					tweet.setDateTime(resultSet.getString("DateTime"));
+					//tweet.setUsername(resultSet.getString("Username"));
+					tweet.setImage(resultSet.getString("Image_Link"));
+					tweetList.add(tweet);
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println("Error in query: " + e);
+				return null;
+			}
+			try
+			{
+				conn.close();
+			}
+			catch(Exception e)
+			{
+				return null;
+			}
+			return tweetList;
 	}
 	
 }

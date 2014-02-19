@@ -79,6 +79,7 @@ public class TweetModel {
 					tweet.setUser(resultSet.getString("User_ID"));
 					tweet.setDateTime(resultSet.getString("DateTime"));
 					tweet.setUsername(resultSet.getString("Username"));
+					tweet.setImage(resultSet.getString("Image_Link"));
 					tweetList.add(tweet);
 				}
 			}
@@ -202,6 +203,7 @@ public class TweetModel {
 					tweet.setUser(resultSet.getString("User_ID"));
 					tweet.setDateTime(resultSet.getString("DateTime"));
 					tweet.setUsername(resultSet.getString("Username"));
+					tweet.setImage(resultSet.getString("Image_Link"));
 					tweetList.add(tweet);
 					}
 				}
@@ -222,7 +224,7 @@ public class TweetModel {
 			return tweetList;
 		}
 	
-		public boolean postTweet(String text, String username)
+		public boolean postTweet(String text, String username, String image)
 		{
 			int id = 0;
 			Connection conn;
@@ -280,7 +282,7 @@ public class TweetModel {
 				System.out.println("Error in query: " + e);
 				return false;
 			}
-			sqlQuery = "INSERT INTO blab (Text, User_ID) VALUES ('" + text + "', " + id +  ")";
+			sqlQuery = "INSERT INTO blab (Text, User_ID, Image_Link) VALUES ('" + text + "', " + id + ", '" + image + "');";
 			System.out.println("Insert Statement: " + sqlQuery);
 			try
 			{

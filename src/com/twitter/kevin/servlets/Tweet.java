@@ -100,7 +100,7 @@ public class Tweet extends HttpServlet {
 				tm.setDataSource(_ds);
 				if (request.getParameter("tweet") != null)
 				{
-					tm.postTweet(request.getParameter("tweet"), request.getParameter("username"));
+					tm.postTweet(request.getParameter("tweet"), request.getParameter("username"), request.getParameter("image"));
 				}
 				Iterator<TweetStore> iterator;
 				TweetModel tm2= new TweetModel();
@@ -132,7 +132,7 @@ public class Tweet extends HttpServlet {
 			tm.setDataSource(_ds);
 			if (request.getParameter("tweet") != null)
 			{
-				tm.postTweet(request.getParameter("tweet"), request.getParameter("username"));
+				tm.postTweet(request.getParameter("tweet"), request.getParameter("username"), request.getParameter("image"));
 			}
 			LinkedList<TweetStore> tweetList;
 			/*if (request.getAttribute("username") == null)

@@ -65,7 +65,7 @@ public class DBUtils {
 		} catch (NamingException e) {
 			throw new ServletException("Cant find datasource name " +dataSourceName+" Error "+ e);
 		}
-		 //CreateSchema(_ds);
+		CreateSchema(_ds); // comment out if on local host
 		return _ds;
 
 	}
@@ -79,9 +79,7 @@ public class DBUtils {
 		} catch (Exception et) {
 			return;
 		}
-		String sqlQuery = "CREATE TABLE IF NOT EXISTS `author` ("
-				+ "`idauthor` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(45) NULL,"
-				+ "PRIMARY KEY (`idauthor`))" + "ENGINE = InnoDB;";
+		String sqlQuery = "CREATE TABLE `user` (`User_ID` int(11) NOT NULL AUTO_INCREMENT,`Username` varchar(45) NOT NULL,`Password` varchar(45) NOT NULL,`Email` varchar(45) NOT NULL,PRIMARY KEY (`User_ID`),UNIQUE KEY `User_ID_UNIQUE` (`User_ID`),UNIQUE KEY `Email_UNIQUE` (`Email`),UNIQUE KEY `Username_UNIQUE` (`Username`)) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;";
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			pmst.executeUpdate();
@@ -89,10 +87,7 @@ public class DBUtils {
 			System.out.println("Can not create table "+ex);
 			return;
 		}
-		sqlQuery = "CREATE TABLE IF NOT EXISTS `section` ("
-				+ "`idsection` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(45) NULL,"
-				+ "PRIMARY KEY (`idsection`))" + "ENGINE = InnoDB;";
-
+		sqlQuery = "CREATE TABLE `following` (`Following_ID` int(11) NOT NULL AUTO_INCREMENT,`FollowedUser_ID` int(11) NOT NULL,`FollowingUser_ID` int(11) NOT NULL,PRIMARY KEY (`Following_ID`),UNIQUE KEY `Following_ID_UNIQUE` (`Following_ID`),KEY `FK_FollowingUser_idx` (`FollowingUser_ID`),KEY `FK_FollowedUser_idx` (`FollowedUser_ID`),CONSTRAINT `FK_FollowedUser` FOREIGN KEY (`FollowedUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,CONSTRAINT `FK_FollowingUser` FOREIGN KEY (`FollowingUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=805 DEFAULT CHARSET=utf8;";
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			pmst.executeUpdate();
@@ -100,22 +95,7 @@ public class DBUtils {
 			System.out.println("Can not create table "+ex);
 			return;
 		}
-		sqlQuery = "CREATE TABLE IF NOT EXISTS `fault` ("
-				+ "`idfault` INT NOT NULL AUTO_INCREMENT," + "`summary` VARCHAR(45) NULL,"
-				+ "`details` VARCHAR(100) NULL,"
-				+ "`author_idauthor` INT NOT NULL,"
-				+ "`section_idsection` INT NOT NULL,"
-				+ "PRIMARY KEY (`idfault`),"
-				+ "INDEX `fk_fault_author_idx` (`author_idauthor` ASC),"
-				+ "INDEX `fk_fault_section1_idx` (`section_idsection` ASC),"
-				+ "CONSTRAINT `fk_fault_author`"
-				+ "  FOREIGN KEY (`author_idauthor`)"
-				+ " REFERENCES `author` (`idauthor`)"
-				+ "ON DELETE NO ACTION" + " ON UPDATE NO ACTION,"
-				+ "CONSTRAINT `fk_fault_section1`"
-				+ " FOREIGN KEY (`section_idsection`)"
-				+ "REFERENCES `section` (`idsection`)" + "ON DELETE NO ACTION "
-				+ "ON UPDATE NO ACTION)" + "ENGINE = InnoDB;";
+		sqlQuery = "CREATE TABLE `blab` (`Blab_ID` int(11) NOT NULL AUTO_INCREMENT,`Text` varchar(45) NOT NULL,`Image_Link` varchar(100) DEFAULT NULL,`Video_Embed` varchar(100) DEFAULT NULL,`User_ID` int(11) NOT NULL,`DateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`Blab_ID`),UNIQUE KEY `Blab_ID_UNIQUE` (`Blab_ID`),KEY `FK_User_idx` (`User_ID`),CONSTRAINT `FK_UserID` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=290 DEFAULT CHARSET=utf8;";
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			pmst.executeUpdate();
@@ -124,7 +104,7 @@ public class DBUtils {
 			return;
 		}
 		ResultSet rs=null;
-		sqlQuery="Select count(name) from author as rowcount";
+		/*sqlQuery="Select count(name) from author as rowcount";
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			rs=pmst.executeQuery();
@@ -164,7 +144,7 @@ public class DBUtils {
 			return;
 		}
 
-
+*/
  
 
 	}

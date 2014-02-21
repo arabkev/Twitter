@@ -45,6 +45,7 @@ public class Follow extends HttpServlet {
 		// TODO Auto-generated method stub
 		//cluster = CassandraHosts.getCluster();
     	DBUtils db = new DBUtils();
+    	db.createSchema();
         _ds=db.assemble(config);
 	}
     

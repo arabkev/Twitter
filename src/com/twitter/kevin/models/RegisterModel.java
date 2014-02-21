@@ -38,7 +38,7 @@ public class RegisterModel {
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "INSERT INTO User(Username, Password, Email) VALUES ('" + username + "', '" + password + "', '" + email + "')";
+		String sqlQuery = "INSERT INTO user(Username, Password, Email) VALUES ('" + username + "', '" + password + "', '" + email + "');";
 		System.out.println(username + password + email);
 		try
 		{

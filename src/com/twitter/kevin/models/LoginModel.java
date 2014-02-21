@@ -41,7 +41,7 @@ public class LoginModel
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT * FROM user";
+		String sqlQuery = "SELECT * FROM user;";
 		try
 		{
 			try

@@ -1,4 +1,5 @@
 package com.twitter.kevin.models;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
@@ -39,7 +40,7 @@ public class TweetModel {
 			}
 			PreparedStatement pstmt = null;
 			Statement stmt = null;
-			String sqlQuery = "SELECT t1.*, t2.Username FROM blab AS t1 INNER JOIN user AS t2 ON t1.User_ID = t2.User_ID ORDER BY Blab_ID";
+			String sqlQuery = "SELECT t1.*, t2.Username FROM blab AS t1 INNER JOIN user AS t2 ON t1.User_ID = t2.User_ID ORDER BY Blab_ID;";
 			System.out.println("Tweets Query: " + sqlQuery);
 			try
 			{
@@ -118,7 +119,7 @@ public class TweetModel {
 			Statement stmt = null;
 			
 			LinkedList<String> userIDs = new LinkedList<String>();
-			String sqlQuery = "SELECT t1.*, t2.Username FROM following AS t1 INNER JOIN user AS t2 ON t1.FollowingUser_ID=t2.User_ID WHERE Username='" + username + "'";
+			String sqlQuery = "SELECT t1.*, t2.Username FROM following AS t1 INNER JOIN user AS t2 ON t1.FollowingUser_ID=t2.User_ID WHERE Username='" + username + "';";
 			try
 			{
 				try
@@ -162,7 +163,7 @@ public class TweetModel {
 			
 			
 			
-			sqlQuery = "SELECT t1.*, t2.Username FROM blab AS t1 INNER JOIN user AS t2 ON t1.User_ID = t2.User_ID ORDER BY Blab_ID";
+			sqlQuery = "SELECT t1.*, t2.Username FROM blab AS t1 INNER JOIN user AS t2 ON t1.User_ID = t2.User_ID ORDER BY Blab_ID;";
 			System.out.println("Tweets Query: " + sqlQuery);
 			try
 			{
@@ -240,7 +241,7 @@ public class TweetModel {
 			PreparedStatement pstmt = null;
 			Statement stmt = null;
 			ResultSet resultSet = null;
-			String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + username + "'";
+			String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
 			System.out.println("User ID query: " + sqlQuery);
 			try
 			{
@@ -282,6 +283,8 @@ public class TweetModel {
 				System.out.println("Error in query: " + e);
 				return false;
 			}
+			Calendar cal = Calendar.getInstance();
+			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
 			sqlQuery = "INSERT INTO blab (Text, User_ID, Image_Link) VALUES ('" + text + "', " + id + ", '" + image + "');";
 			System.out.println("Insert Statement: " + sqlQuery);
 			try

@@ -85,8 +85,9 @@ if (session.getAttribute("username") == null)
 			%>
 			<h2><%=ts.getTweet() %></h2>
 			<%
-			if (ts.getImage() != null)
+			if (ts.getImage().equals("") == false)
 			{
+				System.out.println("Image=" + ts.getImage() + "!");
 			%>
 				<img src="<%=ts.getImage() %>">
 			<%
@@ -111,8 +112,9 @@ else
 		%>
 		<h2><%=ts.getTweet() %></h2>
 		<%
-		if (ts.getImage() != null)
+		if (ts.getImage().equals("") == false)
 		{
+			System.out.println("Image=" + ts.getImage() + "!");
 		%>
 			<img src="<%=ts.getImage() %>">
 		<%

@@ -42,7 +42,7 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followeduser + "'";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
 		try
 		{
 			try
@@ -83,7 +83,7 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followinguser + "'";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "'";
 		try
 		{
 			try
@@ -124,7 +124,7 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "INSERT INTO following(FollowingUser_ID, FollowedUser_ID) VALUES (" + followingID + ", " + followedID + ")";
+		sqlQuery = "INSERT INTO following(FollowingUser_ID, FollowedUser_ID) VALUES (" + followingID + ", " + followedID + ");";
 		try
 		{
 			try
@@ -182,7 +182,7 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followeduser + "'";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
 		try
 		{
 			try
@@ -223,7 +223,7 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followinguser + "'";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
 		try
 		{
 			try
@@ -265,7 +265,7 @@ private DataSource _ds = null;
 			return false;
 		}
 		System.out.println("FOLLOWING USER ID = " + followingID + ", FOLLOWED USER ID = " + followedID);
-		sqlQuery = "SELECT * FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID;
+		sqlQuery = "SELECT * FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
 		try
 		{
 			try
@@ -344,7 +344,7 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followeduser + "'";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
 		try
 		{
 			try
@@ -385,7 +385,7 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + followinguser + "'";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
 		try
 		{
 			try
@@ -426,7 +426,7 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "DELETE FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID;
+		sqlQuery = "DELETE FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
 		System.out.println("UNFOLLOW QUERY: " + sqlQuery);
 		try
 		{
@@ -485,7 +485,7 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM USER WHERE Username='" + username + "'";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
 			System.out.println("User ID query: " + sqlQuery);
 			try
 			{
@@ -527,7 +527,7 @@ private DataSource _ds = null;
 				System.out.println("Error in query: " + e);
 				return null;
 			}
-			sqlQuery = "SELECT * FROM blab WHERE User_ID=" + id;
+			sqlQuery = "SELECT * FROM blab WHERE User_ID=" + id + ";";
 			System.out.println("User Tweets query: " + sqlQuery);
 			try
 			{

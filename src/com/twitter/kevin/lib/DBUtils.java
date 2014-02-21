@@ -1,6 +1,7 @@
 package com.twitter.kevin.lib;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -12,6 +13,8 @@ import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
+
+import com.mysql.jdbc.Statement;
 
 
 
@@ -79,28 +82,39 @@ public class DBUtils {
 		} catch (Exception et) {
 			return;
 		}
-		String sqlQuery = "CREATE TABLE `user` (`User_ID` int(11) NOT NULL AUTO_INCREMENT,`Username` varchar(45) NOT NULL,`Password` varchar(45) NOT NULL,`Email` varchar(45) NOT NULL,PRIMARY KEY (`User_ID`),UNIQUE KEY `User_ID_UNIQUE` (`User_ID`),UNIQUE KEY `Email_UNIQUE` (`Email`),UNIQUE KEY `Username_UNIQUE` (`Username`)) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;";
+		String createStmt = "CREATE DATABASE IF NOT EXISTS `blabber` /*!40100 DEFAULT CHARACTER SET utf8 */;";
 		try {
-			pmst = Conn.prepareStatement(sqlQuery);
+			pmst = Conn.prepareStatement(createStmt);
 			pmst.executeUpdate();
 		} catch (Exception ex) {
 			System.out.println("Can not create table "+ex);
 			return;
 		}
-		sqlQuery = "CREATE TABLE `following` (`Following_ID` int(11) NOT NULL AUTO_INCREMENT,`FollowedUser_ID` int(11) NOT NULL,`FollowingUser_ID` int(11) NOT NULL,PRIMARY KEY (`Following_ID`),UNIQUE KEY `Following_ID_UNIQUE` (`Following_ID`),KEY `FK_FollowingUser_idx` (`FollowingUser_ID`),KEY `FK_FollowedUser_idx` (`FollowedUser_ID`),CONSTRAINT `FK_FollowedUser` FOREIGN KEY (`FollowedUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,CONSTRAINT `FK_FollowingUser` FOREIGN KEY (`FollowingUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=805 DEFAULT CHARSET=utf8;";
+		String sqlQuery = "CREATE TABLE IF NOT EXISTS `user` (`User_ID` int(11) NOT NULL AUTO_INCREMENT,`Username` varchar(45) NOT NULL,`Password` varchar(45) NOT NULL,`Email` varchar(45) NOT NULL,PRIMARY KEY (`User_ID`),UNIQUE KEY `User_ID_UNIQUE` (`User_ID`),UNIQUE KEY `Email_UNIQUE` (`Email`),UNIQUE KEY `Username_UNIQUE` (`Username`)) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;";
+		System.out.println(sqlQuery);
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			pmst.executeUpdate();
 		} catch (Exception ex) {
-			System.out.println("Can not create table "+ex);
+			System.out.println("Can not create table 'USER' in BLABBER"+ex);
 			return;
 		}
-		sqlQuery = "CREATE TABLE `blab` (`Blab_ID` int(11) NOT NULL AUTO_INCREMENT,`Text` varchar(45) NOT NULL,`Image_Link` varchar(100) DEFAULT NULL,`Video_Embed` varchar(100) DEFAULT NULL,`User_ID` int(11) NOT NULL,`DateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`Blab_ID`),UNIQUE KEY `Blab_ID_UNIQUE` (`Blab_ID`),KEY `FK_User_idx` (`User_ID`),CONSTRAINT `FK_UserID` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=290 DEFAULT CHARSET=utf8;";
+		sqlQuery = "CREATE TABLE IF NOT EXISTS `following` (`Following_ID` int(11) NOT NULL AUTO_INCREMENT,`FollowedUser_ID` int(11) NOT NULL,`FollowingUser_ID` int(11) NOT NULL,PRIMARY KEY (`Following_ID`),UNIQUE KEY `Following_ID_UNIQUE` (`Following_ID`),KEY `FK_FollowingUser_idx` (`FollowingUser_ID`),KEY `FK_FollowedUser_idx` (`FollowedUser_ID`),CONSTRAINT `FK_FollowedUser` FOREIGN KEY (`FollowedUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,CONSTRAINT `FK_FollowingUser` FOREIGN KEY (`FollowingUser_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=805 DEFAULT CHARSET=utf8;";
+		System.out.println(sqlQuery);
 		try {
 			pmst = Conn.prepareStatement(sqlQuery);
 			pmst.executeUpdate();
 		} catch (Exception ex) {
-			System.out.println("Can not create table "+ex);
+			System.out.println("Can not create table 'FOLLOWING' in BLABBER"+ex);
+			return;
+		}
+		sqlQuery = "CREATE TABLE IF NOT EXISTS `blab` (`Blab_ID` int(11) NOT NULL AUTO_INCREMENT,`Text` varchar(45) NOT NULL,`Image_Link` varchar(100) DEFAULT NULL,`Video_Embed` varchar(100) DEFAULT NULL,`User_ID` int(11) NOT NULL,`DateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (`Blab_ID`),UNIQUE KEY `Blab_ID_UNIQUE` (`Blab_ID`),KEY `FK_User_idx` (`User_ID`),CONSTRAINT `FK_UserID` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB AUTO_INCREMENT=290 DEFAULT CHARSET=utf8;";
+		System.out.println(sqlQuery);
+		try {
+			pmst = Conn.prepareStatement(sqlQuery);
+			pmst.executeUpdate();
+		} catch (Exception ex) {
+			System.out.println("Can not create table 'BLAB' in BLABBER"+ex);
 			return;
 		}
 		ResultSet rs=null;
@@ -145,7 +159,30 @@ public class DBUtils {
 		}
 
 */
- 
+	}
+	
+	
+	public void createSchema(){
+		String url = "jdbc:mysql://localhost";
+		Connection conn=null;
+		try {
+		   Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+		   conn = DriverManager.getConnection (url, "root", "jimmygomis"); ////CHANGE PASSWORD HERE//////////////////
+
+		}catch (Exception et){
+			System.out.println("Can't get conenction to create schema "+et);
+			return;
+		}
+		String sqlcreateSchema="CREATE DATABASE IF NOT EXISTS `blabber`;";
+		try{
+			java.sql.Statement statement=conn.createStatement();
+			statement.execute(sqlcreateSchema);
+			conn.close();
+		}catch (Exception et){
+			System.out.println("Can not create schema ");
+			return;
+		}
 
 	}
+	
 }

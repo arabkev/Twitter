@@ -38,13 +38,18 @@ public class RegisterModel {
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "INSERT INTO user(Username, Password, Email) VALUES ('" + username + "', '" + password + "', '" + email + "');";
+		//String sqlQuery = "INSERT INTO user(Username, Password, Email) VALUES ('" + username + "', '" + password + "', '" + email + "');";
+		String sqlQuery = "INSERT INTO user(Username, Password, Email) VALUES (?,?,?);";
 		System.out.println(username + password + email);
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				pstmt.setString(3, email);
 			}
 			catch(Exception e)
 			{
@@ -54,7 +59,8 @@ public class RegisterModel {
 			System.out.println("Created prepare");
 			try
 			{
-				stmt.executeUpdate(sqlQuery);
+				//stmt.executeUpdate(sqlQuery);
+				pstmt.executeUpdate();
 			}
 			catch(Exception e)
 			{

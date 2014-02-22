@@ -75,7 +75,7 @@ else
 		%>
 		<h2><%=ts.getTweet() %></h2>
 		<%
-		if (ts.getImage() != null)
+		if (ts.getImage().equals("") == false)
 		{
 		%>
 			<img src="<%=ts.getImage() %>">

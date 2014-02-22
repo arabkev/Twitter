@@ -116,15 +116,17 @@ public class TweetModel {
 				return null;
 			}
 			PreparedStatement pstmt = null;
-			Statement stmt = null;
-			
+			Statement stmt = null;			
 			LinkedList<String> userIDs = new LinkedList<String>();
-			String sqlQuery = "SELECT t1.*, t2.Username FROM following AS t1 INNER JOIN user AS t2 ON t1.FollowingUser_ID=t2.User_ID WHERE Username='" + username + "';";
+			//String sqlQuery = "SELECT t1.*, t2.Username FROM following AS t1 INNER JOIN user AS t2 ON t1.FollowingUser_ID=t2.User_ID WHERE Username='" + username + "';";
+			String sqlQuery = "SELECT t1.*, t2.Username FROM following AS t1 INNER JOIN user AS t2 ON t1.FollowingUser_ID=t2.User_ID WHERE Username=?;";
 			try
 			{
 				try
 				{
-					stmt = conn.createStatement();
+					//stmt = conn.createStatement();
+					pstmt = conn.prepareStatement(sqlQuery);
+					pstmt.setString(1, username);
 				}
 				catch(Exception e)
 				{
@@ -134,7 +136,8 @@ public class TweetModel {
 				System.out.println("Created prepare");
 				try
 				{
-					resultSet = stmt.executeQuery(sqlQuery);
+					//resultSet = stmt.executeQuery(sqlQuery);
+					resultSet = pstmt.executeQuery();
 				}
 				catch(Exception e)
 				{
@@ -160,9 +163,6 @@ public class TweetModel {
 				System.out.println("Error in query: " + e);
 				return null;
 			}
-			
-			
-			
 			sqlQuery = "SELECT t1.*, t2.Username FROM blab AS t1 INNER JOIN user AS t2 ON t1.User_ID = t2.User_ID ORDER BY Blab_ID;";
 			System.out.println("Tweets Query: " + sqlQuery);
 			try
@@ -241,13 +241,16 @@ public class TweetModel {
 			PreparedStatement pstmt = null;
 			Statement stmt = null;
 			ResultSet resultSet = null;
-			String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
+			//String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
+			String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 			System.out.println("User ID query: " + sqlQuery);
 			try
 			{
 				try
 				{
-					stmt = conn.createStatement();
+					//stmt = conn.createStatement();
+					pstmt = conn.prepareStatement(sqlQuery);
+					pstmt.setString(1, username);
 				}
 				catch(Exception e)
 				{
@@ -257,7 +260,8 @@ public class TweetModel {
 				System.out.println("Created prepare");
 				try
 				{
-					resultSet = stmt.executeQuery(sqlQuery);
+					//resultSet = stmt.executeQuery(sqlQuery);
+					resultSet = pstmt.executeQuery();
 				}
 				catch(Exception e)
 				{
@@ -285,13 +289,18 @@ public class TweetModel {
 			}
 			Calendar cal = Calendar.getInstance();
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-			sqlQuery = "INSERT INTO blab (Text, User_ID, Image_Link) VALUES ('" + text + "', " + id + ", '" + image + "');";
+			//sqlQuery = "INSERT INTO blab (Text, User_ID, Image_Link) VALUES ('" + text + "', " + id + ", '" + image + "');";
+			sqlQuery = "INSERT INTO blab (Text, User_ID, Image_Link) VALUES (?,?,?);";
 			System.out.println("Insert Statement: " + sqlQuery);
 			try
 			{
 				try
 				{
-					stmt = conn.createStatement();
+					//stmt = conn.createStatement();
+					pstmt = conn.prepareStatement(sqlQuery);
+					pstmt.setString(1, text);
+					pstmt.setInt(2, id);
+					pstmt.setString(3, image);
 				}
 				catch(Exception e)
 				{
@@ -301,7 +310,8 @@ public class TweetModel {
 				System.out.println("Created prepare");
 				try
 				{
-					stmt.executeUpdate(sqlQuery);
+					//stmt.executeUpdate(sqlQuery);
+					pstmt.executeUpdate();
 				}
 				catch(Exception e)
 				{

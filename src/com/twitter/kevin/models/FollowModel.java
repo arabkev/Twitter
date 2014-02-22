@@ -42,12 +42,15 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		//String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followeduser);
 			}
 			catch(Exception e)
 			{
@@ -57,7 +60,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -83,12 +87,15 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "'";
+		//sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "'";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followinguser);
 			}
 			catch(Exception e)
 			{
@@ -98,7 +105,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -124,12 +132,16 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "INSERT INTO following(FollowingUser_ID, FollowedUser_ID) VALUES (" + followingID + ", " + followedID + ");";
+		//sqlQuery = "INSERT INTO following(FollowingUser_ID, FollowedUser_ID) VALUES (" + followingID + ", " + followedID + ");";
+		sqlQuery = "INSERT INTO following(FollowingUser_ID, FollowedUser_ID) VALUES (?,?);";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setInt(1, followingID);
+				pstmt.setInt(2, followedID);
 			}
 			catch(Exception e)
 			{
@@ -139,7 +151,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				stmt.executeUpdate(sqlQuery);
+				//stmt.executeUpdate(sqlQuery);
+				pstmt.executeUpdate();
 			}
 			catch(Exception e)
 			{
@@ -182,12 +195,15 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		//String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followeduser);
 			}
 			catch(Exception e)
 			{
@@ -197,7 +213,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -223,12 +240,15 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
+		//sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followinguser);
 			}
 			catch(Exception e)
 			{
@@ -238,7 +258,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -265,12 +286,16 @@ private DataSource _ds = null;
 			return false;
 		}
 		System.out.println("FOLLOWING USER ID = " + followingID + ", FOLLOWED USER ID = " + followedID);
-		sqlQuery = "SELECT * FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
+		//sqlQuery = "SELECT * FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
+		sqlQuery = "SELECT * FROM following WHERE FollowedUser_ID=? AND FollowingUser_ID=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setInt(1, followedID);
+				pstmt.setInt(2, followingID);
 			}
 			catch(Exception e)
 			{
@@ -280,7 +305,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -344,12 +370,15 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		//String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followeduser + "';";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followeduser);
 			}
 			catch(Exception e)
 			{
@@ -359,7 +388,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -385,12 +415,15 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
+		//sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + followinguser + "';";
+		sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setString(1, followinguser);
 			}
 			catch(Exception e)
 			{
@@ -400,7 +433,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				resultSet = stmt.executeQuery(sqlQuery);
+				//resultSet = stmt.executeQuery(sqlQuery);
+				resultSet = pstmt.executeQuery();
 			}
 			catch(Exception e)
 			{
@@ -426,13 +460,17 @@ private DataSource _ds = null;
 			System.out.println("Error in query: " + e);
 			return false;
 		}
-		sqlQuery = "DELETE FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
+		//sqlQuery = "DELETE FROM following WHERE FollowedUser_ID=" + followedID + " AND FollowingUser_ID=" + followingID + ";";
+		sqlQuery = "DELETE FROM following WHERE FollowedUser_ID=? AND FollowingUser_ID=?;";
 		System.out.println("UNFOLLOW QUERY: " + sqlQuery);
 		try
 		{
 			try
 			{
-				stmt = conn.createStatement();
+				//stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(sqlQuery);
+				pstmt.setInt(1, followedID);
+				pstmt.setInt(2, followingID);
 			}
 			catch(Exception e)
 			{
@@ -442,7 +480,8 @@ private DataSource _ds = null;
 			System.out.println("Created prepare");
 			try
 			{
-				stmt.executeUpdate(sqlQuery);
+				//stmt.executeUpdate(sqlQuery);
+				pstmt.executeUpdate();
 			}
 			catch(Exception e)
 			{
@@ -485,13 +524,16 @@ private DataSource _ds = null;
 		}
 		PreparedStatement pstmt = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
+		//String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username='" + username + "';";
+		String sqlQuery = "SELECT User_ID, Username FROM user WHERE Username=?;";
 			System.out.println("User ID query: " + sqlQuery);
 			try
 			{
 				try
 				{
-					stmt = conn.createStatement();
+					//stmt = conn.createStatement();
+					pstmt = conn.prepareStatement(sqlQuery);
+					pstmt.setString(1, username);
 				}
 				catch(Exception e)
 				{
@@ -501,7 +543,8 @@ private DataSource _ds = null;
 				System.out.println("Created prepare");
 				try
 				{
-					resultSet = stmt.executeQuery(sqlQuery);
+					//resultSet = stmt.executeQuery(sqlQuery);
+					resultSet = pstmt.executeQuery();
 				}
 				catch(Exception e)
 				{
@@ -527,13 +570,16 @@ private DataSource _ds = null;
 				System.out.println("Error in query: " + e);
 				return null;
 			}
-			sqlQuery = "SELECT * FROM blab WHERE User_ID=" + id + ";";
+			//sqlQuery = "SELECT * FROM blab WHERE User_ID=" + id + ";";
+			sqlQuery = "SELECT * FROM blab WHERE User_ID=?;";
 			System.out.println("User Tweets query: " + sqlQuery);
 			try
 			{
 				try
 				{
-					stmt = conn.createStatement();
+					//stmt = conn.createStatement();
+					pstmt = conn.prepareStatement(sqlQuery);
+					pstmt.setInt(1, id);
 				}
 				catch(Exception e)
 				{
@@ -543,7 +589,8 @@ private DataSource _ds = null;
 				System.out.println("Created prepare");
 				try
 				{
-					resultSet = stmt.executeQuery(sqlQuery);
+					//resultSet = stmt.executeQuery(sqlQuery);
+					resultSet = pstmt.executeQuery();
 				}
 				catch(Exception e)
 				{
